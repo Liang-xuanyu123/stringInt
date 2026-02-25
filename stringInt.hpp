@@ -1,19 +1,4 @@
 /*
-
-    Xuanyu Liang write this file.
-    This file is write about the string + - * /.
-    This is very hard.
-    So, I'll put it on the github for the lazy people.
-
-    I love China.
-    I'm a Chinese.
-    I'm not a 歪果仁.
-    I'm 9 years old.
-
-    I'm do this starting on 2026/2/25
-*/
-
-/*
     有没有人打PC端三角洲，
     本人9岁，60级，
     绝密撤过，但kd低于0.1不显示。
