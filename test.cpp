@@ -1,4 +1,4 @@
-#include <stringInt.hpp>
+#include "stringInt.hpp"
 #include <iostream>
 #include <string.h>
 using namespace std;
@@ -8,3 +8,4 @@ int main()
     cout<<a+b+c;
     return 0;
 }
+
