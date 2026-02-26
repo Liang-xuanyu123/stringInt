@@ -7,16 +7,15 @@
 
 //  2026/2/25写的
 //      ↓    
-
+#pragma once
 #include <iostream>
-#include <string.h>
+#include <string>
 using namespace std;
 class sInt
 {
 public:
-
     string v;
-    sInt(string value) : v(value) {}
+    sInt(string value):v(value) {}
     string getValue() const 
     {
         return v;
@@ -27,7 +26,7 @@ public:
     }
 
 
-    string operator[](int a) //让这个类型跟数组一样，可以访问指定下标的元素
+    string operator[](int a)//让这个类型跟数组一样，可以访问指定下标的元素
     {
         return string(1,v[a]); 
         /*
@@ -37,36 +36,59 @@ public:
         */
     }
 
-    friend string operator+(const sInt& a,const sInt& b) //加法
+    friend string operator+(const sInt& a,const sInt& b)//加法
     {   
         string result;
         bool carry=false;
-        int maxLen=max(a.size(),b.size()); //防止这两个字符串长度不同
-        string num1=string(maxLen-a.size(),'0')+a.v;
+        int maxLen=max(a.size(),b.size());//防止这两个字符串长度不同
+        string num1=string(maxLen-a.size(),'0')+a.v;//补0，比如maxLen=5，a.size=3，a.v="123"，就生成00123
         string num2=string(maxLen-b.size(),'0')+b.v;
         //                ^^^^^^^^^^^^^^^^^
         //这里一定要用maxLen（两个加数中最大的）减这个加数的长度，不然数组会越界
         for (int i=maxLen-1;i>=0;i--)
         {
-            int digit1=num1[i]-'0';
+            int digit1=num1[i]-'0';//把char转换成int，就比如 '0'-'0'=0 '1'-'0'=1
             int digit2=num2[i]-'0';
-            int sum=digit1+digit2+(carry?1:0);
+            int sum=digit1+digit2+(carry?1:0);//如果进位就+1
             if (sum>=10) carry=true;
             result=char('0'+(sum % 10))+result;
         }
-        if (carry) result='1'+result; //两个一位数加起来一定不会超过20，所以最多就进1
+        if (carry) result='1'+result;//两个一位数加起来一定不会超过20，所以最多就进1
         return result;
         /*
         这里用遍历的方法，遍历这个字符串，
         这里用一个变量（carry）来记录是否进位，
         如果进位，这一位就+1，然后把每一位的数字记录到result里。
         */
-    }
-    //  2026/2/26写的
-    //      ↓    
-    friend string operator-(const sInt& a,const sInt& b)
+    };
+//  2026/2/26写的
+//      ↓    
+    friend string operator-(const sInt& a,const sInt& b) //减法
     {
-        
+        int maxLen=max(a.size(),b.size());
+        string num1=string(maxLen-a.size(),'0')+a.v;
+        string num2=string(maxLen-b.size(),'0')+b.v;
 
+        bool borrow=false;
+        string result(maxLen,'0');
+
+        for (int i=maxLen-1;i>=0;--i)
+        {
+            int diff=(num1[i]-'0')-(num2[i]-'0')-(borrow ? 1:0);
+            if (diff < 0)
+            {
+                diff+=10;
+                borrow=true;
+            }
+            else borrow=false;
+            result[i]=char('0'+diff);
+        }
+
+        auto pos=result.find_first_not_of('0');
+        if (pos!=string::npos) result.erase(0,pos);
+        else result="0";
+
+        return result;
     }
-}
+
+};
