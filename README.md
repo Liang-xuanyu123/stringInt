@@ -8,12 +8,12 @@
   
 ```
 #include "stringInt.hpp"
-#include <iostream>
-#include <string.h>
-sInt a("999"), b("54088"), c("1")
+using namespace std;
 int main()
 {
-    cout<<a+b+c;
+    sInt a("54088"), b("53341"), c("999");
+    cout<<a+b+c<<"\n";
+    cout<<b-c<<"\n";
     return 0;
 }
 ```
